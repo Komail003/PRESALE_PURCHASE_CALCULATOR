@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>Calculator</title>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <style>
+
+        @font-face {
+            font-family: '8-bit';
+            src: url('./8-bit-fortress.woff');
+        }
+
+        @font-face {
+            font-family: 'Gosha';
+            src: url('./GoshaSansRegular.otf');
+        }
+
+        @font-face {
+            font-family: 'Gosha Bold';
+            src: url('./GoshaSansBold.otf');
+        }
+
+        body {
+            font-family: 'Gosha', sans-serif !Important;
+            background-color: black;
+        }
+
+        .card {
+            border: 4px solid white;
+            border-radius: 10px;
+
+        }
+
+        .card-header {
+            background-color: #f66329;
+            text-align: center;
+            color: white;
+            padding: 1.5rem;
+        }
+
+        .card-body {
+            background-color: #f6c929;
+        }
+
+        .form-control {
+            background-color: #fff;
+            border: 1px solid #fff;
+            border-radius: 10px;
+            font-family: 'Roboto Mono', monospace;
+            font-weight: bold;
+            color: black;
+            font-size: 1.25rem;
+        }
+
+        select.form-control, select.form-control:focus {
+            background-color: #b231c4;
+            color: white;
+            font-family: '8-bit', sans-serif !Important;
+
+        }
+
+        .uppercase {
+            text-transform: uppercase;
+        }
+
+        .input-icon {
+            position: relative;
+
+        }
+
+        .input-icon > i {
+            position: absolute;
+            display: block;
+            transform: translate(0, -50%);
+            top: 48%;
+            pointer-events: none;
+            width: 60px;
+            text-align: center;
+            font-style: normal;
+            padding-top: 1px;
+            color: #000000;
+        }
+
+        .input-icon > input {
+            padding-left: 30px;
+            padding-right: 0;
+            top: 2%;
+        }
+
+        .btn-primary {
+            background-color: #009fe3;
+            color: white;
+            font-size: 0.9rem;
+            height: 100%;
+            /*font-size: 1.25rem;*/
+        }
+
+        .input-icon-right > i {
+            right: 10px;
+        }
+
+        .input-icon-right > input {
+            padding-left: 0;
+            padding-right: 80px;
+            text-align: right;
+        }
+
+        .bit {
+            font-family: '8-bit', sans-serif !Important;
+        }
+
+        .vertical-center {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row vertical-center">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="bit">PRESALE PURCHASE CALCULATOR</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+
+
+                        <div class="col-md-3 px-0 mx-0">
+
+                            <div class="input-icon input-icon-right">
+                                <input class="form-control" id="USDT" name="USDT" onkeyup="format(this)"
+                                       type="text" value="100">
+                                <i>USDT</i>
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="col-md-4 px-2">
+                            <select class="form-control" id="type" name="type"
+
+                                    style="border: 2px solid black;box-shadow: inset 0 0 5px #f8a100;">
+                                <option value="125">PRESALE BETA</option>
+                                <option value="100">STAGE 1</option>
+                                <option value="83">STAGE 2</option>
+                                <option value="77">STAGE 3</option>
+                                <option value="71">STAGE 4</option>
+                                <option value="64">STAGE 5</option>
+                                <option value="58">STAGE 6</option>
+                                <option value="54">STAGE 7</option>
+                                <option value="50">STAGE 8</option>
+                            </select>
+
+                        </div>
+                        <div class="col-md-2 px-1">
+                            <button class="btn btn-primary col-md-12" onclick="getResult()"
+                                    style="border: 2px solid black;box-shadow: inset 0 0 5px #009fe3;border-radius: 10px; font-family: '8-bit', sans-serif !Important;">
+                                CONVERT
+                            </button>
+
+                        </div>
+
+
+                        <div class="col-md-3 px-1">
+                            <div class="input-icon input-icon-right">
+                                <input class="form-control" id="MCADE" name="MCADE" type="text" value="12,100">
+                                <i>MCADE</i>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <br>
+                    <h4 class="uppercase text-center">Get your early bird tokens now! Use our calculator to compare
+                        stage prices and see how much you can gain!</h4>
+                    <!--                    <h4  class="uppercase">See how you will gain by comparing stages</h4>-->
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+</div>
+
+
+<script>
+
+    window.onload = getResult;
+
+    function getResult() {
+        let usdt = parseFloat(document.getElementById("USDT").value.replace(/,/g, ''));
+        let stage = parseFloat(document.getElementById("type").value);
+
+
+        let result = usdt * stage;
+
+        document.getElementById('MCADE').value = toComma(result);
+
+    }
+
+    let toComma = (x) => x.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+    function format(input) {
+        var nStr = input.value + '';
+        nStr = nStr.replace(/\,/g, "");
+        x = nStr.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        input.value = x1 + x2;
+    }
+
+</script>
+</body>
+</html>
